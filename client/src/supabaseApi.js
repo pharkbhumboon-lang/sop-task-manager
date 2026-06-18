@@ -2,11 +2,13 @@ import { createClient } from "@supabase/supabase-js";
 
 const viteEnv = import.meta.env ?? {};
 const nodeEnv = globalThis.process?.env ?? {};
-const supabaseUrl = viteEnv.VITE_SUPABASE_URL ?? nodeEnv.VITE_SUPABASE_URL ?? "";
-const supabaseAnonKey = viteEnv.VITE_SUPABASE_ANON_KEY ?? nodeEnv.VITE_SUPABASE_ANON_KEY ?? "";
+const portfolioSupabaseUrl = "https://prnshqbcwwimcdqnocwi.supabase.co";
+const portfolioSupabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBybnNocWJjd3dpbWNkcW5vY3dpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE3OTYzMTAsImV4cCI6MjA5NzM3MjMxMH0.6HSpSBiArexxHMXrz5Ikizm3_Z6qU_kXXID30OJS4hg";
+const supabaseUrl = viteEnv.VITE_SUPABASE_URL ?? nodeEnv.VITE_SUPABASE_URL ?? (viteEnv.PROD ? portfolioSupabaseUrl : "");
+const supabaseAnonKey = viteEnv.VITE_SUPABASE_ANON_KEY ?? nodeEnv.VITE_SUPABASE_ANON_KEY ?? (viteEnv.PROD ? portfolioSupabaseAnonKey : "");
 
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
-export const isSupabaseMode = viteEnv.VITE_DATA_BACKEND === "supabase" || nodeEnv.VITE_DATA_BACKEND === "supabase";
+export const isSupabaseMode = viteEnv.VITE_DATA_BACKEND === "supabase" || nodeEnv.VITE_DATA_BACKEND === "supabase" || (viteEnv.PROD && isSupabaseConfigured);
 export const supabase = isSupabaseConfigured ? createClient(supabaseUrl, supabaseAnonKey) : null;
 
 const ROLE_LEVELS = { Admin: 1, Manager: 2, User: 3, Member: 3 };
