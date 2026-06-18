@@ -214,15 +214,6 @@ function LoginPage({ onLogin }) {
     }
   }
 
-  async function signInProvider(provider) {
-    setError("");
-    try {
-      await api.signInWithProvider(provider);
-    } catch (err) {
-      setError(err.message);
-    }
-  }
-
   return (
     <main className="grid min-h-screen place-items-center bg-appbg p-3">
       <section className="grid w-full max-w-2xl gap-4">
@@ -235,17 +226,8 @@ function LoginPage({ onLogin }) {
           <form onSubmit={submit} className="mt-6 grid gap-3">
             {isSupabaseMode ? (
               <>
-                <button type="button" onClick={() => signInProvider("google")} className="motion-interactive inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-base font-semibold text-secondary-500 shadow-lift hover:bg-primary-100">
-                  <SolarIcon icon="solar:user-linear" size={18} />
-                  Continue with Google
-                </button>
-                <button type="button" onClick={() => signInProvider("microsoft")} className="motion-interactive inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/20 bg-secondary-500/80 px-6 py-3.5 text-base font-semibold text-white hover:border-action/60">
-                  <SolarIcon icon="solar:server-square-update-linear" size={18} />
-                  Continue with Microsoft
-                </button>
-                <p className="text-xs leading-5 text-white/55">
-                  Portfolio deployment uses Supabase Auth. Add Google and Azure providers in Supabase before publishing.
-                </p>
+                <TextInput label="Email" value={email} onChange={setEmail} type="email" required />
+                <TextInput label="Password" value={password} onChange={setPassword} type="password" required />
               </>
             ) : (
               <>
@@ -254,12 +236,10 @@ function LoginPage({ onLogin }) {
               </>
             )}
             {error ? <div className="rounded-glass border border-danger/20 bg-danger/10 px-3 py-2 text-sm font-bold text-danger">{error}</div> : null}
-            {!isSupabaseMode ? (
-              <button type="submit" className="motion-interactive inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-base font-semibold text-secondary-500 shadow-lift hover:bg-primary-100">
-                <SolarIcon icon="solar:arrow-right-linear" size={18} />
-                Sign in
-              </button>
-            ) : null}
+            <button type="submit" className="motion-interactive inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-base font-semibold text-secondary-500 shadow-lift hover:bg-primary-100">
+              <SolarIcon icon="solar:arrow-right-linear" size={18} />
+              Sign in
+            </button>
           </form>
         </div>
       </section>

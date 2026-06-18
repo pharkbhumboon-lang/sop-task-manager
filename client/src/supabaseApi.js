@@ -526,8 +526,12 @@ export const supabaseApi = {
   async logout() {
     await requireSupabase().auth.signOut();
   },
-  login: async () => {
-    throw new Error("Use Google or Microsoft sign-in in Supabase deployment mode.");
+  login: async ({ email, password }) => {
+    const client = requireSupabase();
+    const { data, error } = await client.auth.signInWithPassword({ email, password });
+    if (error) throw new Error(error.message);
+    const user = await profileForSession(data.user);
+    return { user };
   },
   dashboard: async () => buildDashboard(await fetchTasks()),
   reports: buildReports,
