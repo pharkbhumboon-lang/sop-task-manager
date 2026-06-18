@@ -1,0 +1,19 @@
+{
+  "name": "sop-task-manager",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "install:all": "npm install --workspaces",
+    "dev": "node scripts/dev.js",
+    "dev:client": "npm run dev --workspace client",
+    "test": "npm test --workspace server && npm test --workspace client",
+    "build": "npm run build --workspace client",
+    "deploy:firebase": "npm run build && npx firebase-tools deploy --only hosting",
+    "deploy:supabase": "npx supabase db push"
+  },
+  "workspaces": [
+    "server",
+    "client"
+  ]
+}
