@@ -225,7 +225,7 @@ function LoginPage({ onLogin }) {
 
   return (
     <main className="grid min-h-screen place-items-center bg-appbg p-3">
-      <section className="grid w-full max-w-5xl gap-4 lg:grid-cols-[1fr_0.9fr]">
+      <section className="grid w-full max-w-2xl gap-4">
         <div className="glass-dark rounded-glass p-6 shadow-lift">
           <p className="text-xs font-semibold uppercase text-white/60">Internal SOP</p>
           <h1 className="mt-8 text-balance text-5xl font-normal leading-none text-white">Task Manager Login</h1>
@@ -261,15 +261,6 @@ function LoginPage({ onLogin }) {
               </button>
             ) : null}
           </form>
-        </div>
-        <div className="glass-dark rounded-glass p-6 shadow-lift">
-          <p className="text-xs font-semibold uppercase text-action">Access levels</p>
-          <h2 className="mt-8 text-3xl font-normal leading-tight text-white">Sign in with your assigned role</h2>
-          <div className="mt-6 grid gap-3 text-sm font-semibold text-white/70">
-            <div className="rounded-glass bg-secondary-500/75 px-4 py-3"><strong className="text-white">Admin / L1</strong><br />Full access, users, settings, SOP publishing.</div>
-            <div className="rounded-glass bg-secondary-500/75 px-4 py-3"><strong className="text-white">Manager / L2</strong><br />Task creation and team workflow actions.</div>
-            <div className="rounded-glass bg-secondary-500/75 px-4 py-3"><strong className="text-white">User / L3</strong><br />Assigned work, status updates, comments, and SOP reading.</div>
-          </div>
         </div>
       </section>
     </main>
