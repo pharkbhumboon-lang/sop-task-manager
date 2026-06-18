@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { buildDashboard, mapProfile, mapProject, mapTask, providerForMicrosoft } from "./supabaseApi.js";
+import { buildDashboard, mapProfile, mapProject, mapTask, providerForMicrosoft, safeHeaderValue } from "./supabaseApi.js";
 
 test("maps a Supabase profile into the app user contract", () => {
   assert.deepEqual(
@@ -81,4 +81,9 @@ test("builds dashboard metrics from Supabase task rows", () => {
 
 test("uses Supabase Azure provider for Microsoft login", () => {
   assert.equal(providerForMicrosoft(), "azure");
+});
+
+test("falls back when a Supabase header value contains pasted unicode", () => {
+  assert.equal(safeHeaderValue("abc.def.ghi", "fallback"), "abc.def.ghi");
+  assert.equal(safeHeaderValue("abc…def", "fallback"), "fallback");
 });
