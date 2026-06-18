@@ -5,3 +5,7 @@ client/dist/
 server/data/
 *.log
 .firebaserc
+.vercel
+supabase/.temp/
+
+.vercel
