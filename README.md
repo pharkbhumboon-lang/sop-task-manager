@@ -133,6 +133,19 @@ server/data/sop-task-manager.sqlite
 
 To reset sample data, stop the server and delete that file. It will be recreated on the next run.
 
+## Controlled Execution Migration
+
+`supabase/migrations/20260620010000_controlled_execution.sql` is an additive Phase 2 foundation migration. It:
+
+- Backfills the existing portfolio records into a default organization and global location.
+- Creates organization memberships, immutable SOP version snapshots, approval requests, workflow runs, step instances, step responses, protected evidence metadata, review schedules, and append-only audit events.
+- Replaces the original broad hosted RLS policies with organization-aware policies.
+- Protects published SOP versions and prevents workflow runs from changing their SOP version after creation.
+
+Before applying it to a non-demo Supabase project, export the current database and run the migration in a staging project first. Do not roll back by deleting version, run, audit, or evidence history. Recovery means disabling the new UI/API path while retaining those records.
+
+The current portfolio UI remains on the Phase 1 task/SOP surface. The new workflow-run authoring and executor screens are the next application layer on top of this schema foundation.
+
 ## Tests And Build
 
 ```powershell
