@@ -30,7 +30,7 @@ function SenySymbol() {
 export function Shell({ activePage, setActivePage, user, onLogout, children }) {
   return (
     <div className="min-h-screen bg-appbg p-3 text-ink lg:grid lg:grid-cols-[244px_1fr] lg:gap-3">
-      <aside className="glass-dark flex flex-col rounded-[24px] border border-white/10 lg:min-h-[calc(100vh-24px)]">
+      <aside className="glass-dark flex flex-col rounded-shell border border-white/10 lg:min-h-[calc(100vh-24px)]">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4 lg:block">
           <div>
             <div className="flex items-center gap-2">
@@ -42,7 +42,7 @@ export function Shell({ activePage, setActivePage, user, onLogout, children }) {
           <div className="flex min-w-0 items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-2 text-xs text-white/70 lg:mt-5">
             <SolarIcon icon="solar:user-linear" size={15} />
             <span className="min-w-0 flex-1 truncate">{user?.name ?? "Current User"} / L{user?.userLevel ?? "-"}</span>
-            <button type="button" onClick={onLogout} className="rounded-full bg-white px-2.5 py-1 text-[11px] font-extrabold text-secondary-500">
+            <button type="button" onClick={onLogout} className="motion-interactive rounded-full bg-action px-2.5 py-1 text-[11px] font-extrabold text-white hover:bg-primary-400">
               Log out
             </button>
           </div>
@@ -56,7 +56,7 @@ export function Shell({ activePage, setActivePage, user, onLogout, children }) {
                 type="button"
                 onClick={() => setActivePage(item.id)}
                 className={`motion-interactive flex min-h-10 items-center gap-2.5 whitespace-nowrap rounded-full px-3 text-sm font-bold ${
-                  active ? "bg-white text-secondary-500 shadow-glow" : "text-white/55 hover:bg-white/[0.06] hover:text-white"
+                  active ? "bg-action text-white shadow-glow" : "text-white/55 hover:bg-white/[0.06] hover:text-white"
                 }`}
                 title={item.label}
               >
@@ -71,14 +71,14 @@ export function Shell({ activePage, setActivePage, user, onLogout, children }) {
           <span>2026</span>
         </div>
       </aside>
-      <main className="workspace-surface min-h-[calc(100vh-24px)] overflow-hidden rounded-[28px] border border-white/10 p-4 lg:p-6">{children}</main>
+      <main className="workspace-surface min-h-[calc(100vh-24px)] overflow-hidden rounded-shell border border-white/10 p-4 lg:p-6">{children}</main>
     </div>
   );
 }
 
 export function PageHeader({ eyebrow, title, subtitle, actionLabel, onAction }) {
   return (
-    <header className="intro-panel mb-5 grid gap-4 rounded-[24px] p-6 lg:grid-cols-[1fr_auto] lg:items-end">
+    <header className="intro-panel mb-5 grid gap-4 rounded-panel p-6 lg:grid-cols-[1fr_auto] lg:items-end">
       <div>
         <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-action">{eyebrow}</p>
         <h2 className="text-balance text-4xl font-semibold leading-none text-white sm:text-5xl">{title}</h2>
@@ -88,7 +88,7 @@ export function PageHeader({ eyebrow, title, subtitle, actionLabel, onAction }) 
         <button
           type="button"
           onClick={onAction}
-          className="motion-interactive inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-secondary-500 shadow-lift hover:bg-primary-100"
+          className="motion-interactive inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-action px-6 py-3.5 text-sm font-semibold text-white shadow-lift hover:bg-primary-400"
         >
           <SolarIcon icon="solar:arrow-right-linear" size={17} />
           {actionLabel}
@@ -100,7 +100,7 @@ export function PageHeader({ eyebrow, title, subtitle, actionLabel, onAction }) 
 
 export function Panel({ title, subtitle, children, className = "" }) {
   return (
-    <section className={`motion-panel rounded-[22px] border border-white/10 bg-secondary-500/80 p-4 shadow-lift ${className}`}>
+    <section className={`motion-panel rounded-glass border border-white/10 bg-panel/95 p-4 shadow-lift ${className}`}>
       <div className="mb-3">
         <h3 className="text-base font-black text-white">{title}</h3>
         {subtitle ? <p className="mt-1 text-sm text-white/70">{subtitle}</p> : null}
@@ -120,7 +120,7 @@ export function KpiCard({ label, value, helper, tone = "action", icon = "solar:c
   }[tone];
 
   return (
-    <article className="motion-panel grid min-h-32 gap-2 rounded-[22px] border border-white/10 bg-secondary-500/80 p-4 shadow-lift">
+    <article className="motion-panel grid min-h-32 gap-2 rounded-glass border border-white/10 bg-panel/95 p-4 shadow-lift">
       <div className={`flex items-center justify-between ${color}`}>
         <span className="text-xs font-extrabold uppercase text-white/70">{label}</span>
         {typeof icon === "string" ? <SolarIcon icon={icon} size={19} /> : icon}
@@ -171,12 +171,12 @@ export function Field({ label, children }) {
   );
 }
 
-export const inputClass = "focus-ring min-h-12 w-full rounded-full border border-white/10 bg-[#171717]/70 px-4 text-sm font-semibold text-white shadow-soft placeholder:text-white/35";
-export const textareaClass = "focus-ring min-h-24 w-full rounded-[18px] border border-white/10 bg-[#171717]/70 px-4 py-3 text-sm font-semibold text-white shadow-soft placeholder:text-white/35";
+export const inputClass = "focus-ring min-h-12 w-full rounded-full border border-white/10 bg-secondary-600/90 px-4 text-sm font-semibold text-white shadow-soft placeholder:text-white/35";
+export const textareaClass = "focus-ring min-h-24 w-full rounded-glass border border-white/10 bg-secondary-600/90 px-4 py-3 text-sm font-semibold text-white shadow-soft placeholder:text-white/35";
 
 export function EmptyState({ label }) {
   return (
-    <div className="motion-pop rounded-[22px] border border-dashed border-white/10 bg-secondary-500/75 px-4 py-8 text-center text-sm font-semibold text-white/60">
+    <div className="motion-pop rounded-glass border border-dashed border-white/10 bg-panel/90 px-4 py-8 text-center text-sm font-semibold text-white/60">
       {label}
     </div>
   );
@@ -184,7 +184,7 @@ export function EmptyState({ label }) {
 
 export function FilterBar({ children }) {
   return (
-    <div className="motion-panel mb-4 grid gap-3 rounded-[22px] border border-white/10 bg-secondary-500/80 p-4 shadow-lift md:grid-cols-4">
+    <div className="motion-panel mb-4 grid gap-3 rounded-glass border border-white/10 bg-panel/95 p-4 shadow-lift md:grid-cols-4">
       <div className="flex items-center gap-2 text-sm font-extrabold text-white/70 md:col-span-4">
         <SolarIcon icon="solar:filter-linear" size={17} />
         Filters

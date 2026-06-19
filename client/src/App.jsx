@@ -236,7 +236,7 @@ function LoginPage({ onLogin }) {
               </>
             )}
             {error ? <div className="rounded-glass border border-danger/20 bg-danger/10 px-3 py-2 text-sm font-bold text-danger">{error}</div> : null}
-            <button type="submit" className="motion-interactive inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-base font-semibold text-secondary-500 shadow-lift hover:bg-primary-100">
+            <button type="submit" className="motion-interactive inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-action px-6 py-3.5 text-base font-semibold text-white shadow-lift hover:bg-primary-400">
               <SolarIcon icon="solar:arrow-right-linear" size={18} />
               Sign in
             </button>
@@ -428,7 +428,7 @@ function TaskDeadlineCalendar({ tasks, month, setMonth, onOpen }) {
         </label>
       </div>
       <div className="overflow-x-auto">
-        <div className="min-w-[720px] rounded-[20px] border border-white/10 bg-[#171717]/55 p-2">
+        <div className="min-w-[720px] rounded-[20px] border border-white/10 bg-secondary-600/80 p-2">
           <div className="grid grid-cols-7 gap-1 pb-2">
             {calendar.weekdays.map((weekday) => (
               <div key={weekday} className="px-2 py-1 text-[11px] font-extrabold uppercase tracking-[0.12em] text-white/45">
@@ -794,7 +794,7 @@ function SopsPage({ data, refresh, user }) {
             <div className="motion-pop rounded-glass border border-action/20 bg-secondary-500/70 p-3">
               <div className="mb-2 flex flex-wrap items-center justify-between gap-2 text-xs font-extrabold uppercase text-white/60">
                 <span>Live matches for "{query}"</span>
-                <span className="rounded-full bg-white px-2.5 py-1 text-secondary-500">{liveMatches.length ? `${liveMatches.length} found` : "No match"}</span>
+                <span className="rounded-full bg-action px-2.5 py-1 text-white">{liveMatches.length ? `${liveMatches.length} found` : "No match"}</span>
               </div>
               {liveMatches.length ? (
                 <div className="grid gap-2 sm:grid-cols-2">
@@ -820,7 +820,7 @@ function SopsPage({ data, refresh, user }) {
             </div>
           ) : null}
         </div>
-        <button type="submit" className="motion-interactive inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-extrabold text-secondary-500 md:self-end">
+        <button type="submit" className="motion-interactive inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-action px-5 text-sm font-extrabold text-white hover:bg-primary-400 md:self-end">
           <SolarIcon icon="solar:magnifer-linear" size={17} />
           Search
         </button>
@@ -1064,7 +1064,7 @@ function SopReader({ sop, isAdmin, onStatusChange, onApprove, onAcknowledge, onM
         </div>
         {isAdmin && sop.status === "Draft" ? (
           <div className="mt-3 flex flex-wrap gap-2">
-            <button type="button" onClick={() => onStatusChange("Published")} className="rounded-full bg-white px-3 py-2 text-xs font-extrabold text-secondary-500">Publish</button>
+            <button type="button" onClick={() => onStatusChange("Published")} className="motion-interactive rounded-full bg-action px-3 py-2 text-xs font-extrabold text-white hover:bg-primary-400">Publish</button>
             <button type="button" onClick={() => onStatusChange("Archived")} className="rounded-full border border-white/10 bg-secondary-500/75 px-3 py-2 text-xs font-extrabold text-white/70">Archive</button>
           </div>
         ) : null}
@@ -1117,7 +1117,7 @@ function SopReader({ sop, isAdmin, onStatusChange, onApprove, onAcknowledge, onM
         ) : null}
         <div className="mt-4 flex flex-wrap gap-2">
           {isAdmin && sop.approvalStatus !== "Approved" ? (
-            <button type="button" onClick={onApprove} className="motion-interactive rounded-full bg-white px-3 py-2 text-xs font-extrabold text-secondary-500">Approve SOP</button>
+            <button type="button" onClick={onApprove} className="motion-interactive rounded-full bg-action px-3 py-2 text-xs font-extrabold text-white hover:bg-primary-400">Approve SOP</button>
           ) : null}
           {lifecycleStatusOptions.filter((status) => status !== sop.status).slice(0, 4).map((status) => (
             <button key={status} type="button" onClick={() => onMoveStatus(status)} className="motion-interactive rounded-full border border-white/10 bg-secondary-500/75 px-3 py-2 text-xs font-extrabold text-white/70">
@@ -1154,7 +1154,7 @@ function SopReader({ sop, isAdmin, onStatusChange, onApprove, onAcknowledge, onM
             <ControlLine label="Audit Owner" value={sop.auditOwner || "-"} />
           </div>
           <div className="mt-4 flex flex-wrap gap-2">
-            <button type="button" onClick={onAddEvidence} className="motion-interactive rounded-full bg-white px-3 py-2 text-xs font-extrabold text-secondary-500">Add evidence</button>
+            <button type="button" onClick={onAddEvidence} className="motion-interactive rounded-full bg-action px-3 py-2 text-xs font-extrabold text-white hover:bg-primary-400">Add evidence</button>
             <button type="button" onClick={onLogException} className="motion-interactive rounded-full border border-danger/20 bg-danger/10 px-3 py-2 text-xs font-extrabold text-danger">Log exception</button>
           </div>
         </div>
@@ -1534,7 +1534,7 @@ function SettingsPage({ data, user, refresh }) {
                 <TextInput label="Password" value={form.password} onChange={(value) => setForm({ ...form, password: value })} type="password" required />
                 <Select label="Role" value={form.role} onChange={(value) => setForm({ ...form, role: value })} options={roleOptions} />
                 <Select label="Department" value={form.department} onChange={(value) => setForm({ ...form, department: value })} options={departmentOptions} className="md:col-span-2" />
-                <button type="submit" disabled={saving} className="motion-interactive inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-white px-4 text-sm font-extrabold text-secondary-500 disabled:opacity-60 md:col-span-2">
+                <button type="submit" disabled={saving} className="motion-interactive inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-action px-4 text-sm font-extrabold text-white hover:bg-primary-400 disabled:opacity-60 md:col-span-2">
                   <SolarIcon icon="solar:user-plus-linear" size={16} />
                   {saving ? "Adding user..." : "Add user"}
                 </button>
@@ -1651,7 +1651,7 @@ function IconButton({ label, icon: Icon, onClick, danger = false }) {
 function FormButtons({ submitLabel, onCancel }) {
   return (
     <div className="flex gap-2 md:col-span-4">
-      <button type="submit" className="motion-interactive inline-flex min-h-10 items-center gap-2 rounded-full bg-white px-4 text-sm font-extrabold text-secondary-500"><SolarIcon icon="solar:diskette-linear" size={16} />{submitLabel}</button>
+      <button type="submit" className="motion-interactive inline-flex min-h-10 items-center gap-2 rounded-full bg-action px-4 text-sm font-extrabold text-white hover:bg-primary-400"><SolarIcon icon="solar:diskette-linear" size={16} />{submitLabel}</button>
       <button type="button" onClick={onCancel} className="motion-interactive inline-flex min-h-10 items-center gap-2 rounded-full border border-white/10 bg-secondary-500/75 px-4 text-sm font-extrabold text-white/70"><SolarIcon icon="solar:close-circle-linear" size={16} />Cancel</button>
     </div>
   );
