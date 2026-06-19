@@ -5,6 +5,7 @@ export const navItems = [
   { id: "tasks", label: "My Tasks", icon: "solar:pulse-linear" },
   { id: "projects", label: "Projects", icon: "solar:server-square-update-linear" },
   { id: "sops", label: "SOP Library", icon: "solar:book-bookmark-linear" },
+  { id: "calendar", label: "SOP Calendar", icon: "solar:calendar-mark-linear" },
   { id: "transformations", label: "Transformation", icon: "solar:route-linear" },
   { id: "reports", label: "Reports", icon: "solar:graph-new-up-linear" },
   { id: "settings", label: "Settings", icon: "solar:settings-linear" }

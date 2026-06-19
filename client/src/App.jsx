@@ -188,6 +188,7 @@ export default function App() {
         {activePage === "tasks" && <TasksPage {...pageProps} />}
         {activePage === "projects" && <ProjectsPage {...pageProps} />}
         {activePage === "sops" && <SopsPage {...pageProps} />}
+        {activePage === "calendar" && <SopCalendarPage {...pageProps} />}
         {activePage === "transformations" && <TransformationsPage {...pageProps} />}
         {activePage === "reports" && <ReportsPage {...pageProps} />}
         {activePage === "settings" && <SettingsPage {...pageProps} />}
@@ -288,7 +289,6 @@ function TasksPage({ data, filters, setFilters, refresh, loading, user }) {
   const [detail, setDetail] = useState(null);
   const [comment, setComment] = useState("");
   const [form, setForm] = useState(defaultTaskForm);
-  const [calendarMonth, setCalendarMonth] = useState(new Date().toISOString().slice(0, 7));
   const canCreateTasks = (user?.userLevel ?? 3) <= 2;
 
   useEffect(() => {
@@ -400,7 +400,6 @@ function TasksPage({ data, filters, setFilters, refresh, loading, user }) {
           onSubmit={saveTask}
         />
       ) : null}
-      <TaskDeadlineCalendar tasks={data.tasks} month={calendarMonth} setMonth={setCalendarMonth} onOpen={openDetail} />
       <section className="grid gap-4 xl:grid-cols-[1.25fr_0.75fr]">
         <Panel title="Task Board" subtitle={`${data.tasks.length} tasks shown`}>
           {loading ? <EmptyState label="Loading tasks..." /> : <TaskList tasks={data.tasks} onEdit={canCreateTasks ? editTask : null} onDelete={canCreateTasks ? removeTask : null} onOpen={openDetail} onStatusChange={changeTaskStatus} />}
@@ -411,12 +410,31 @@ function TasksPage({ data, filters, setFilters, refresh, loading, user }) {
   );
 }
 
+function SopCalendarPage({ data, loading }) {
+  const [calendarMonth, setCalendarMonth] = useState(new Date().toISOString().slice(0, 7));
+  const [selectedTask, setSelectedTask] = useState(null);
+
+  return (
+    <>
+      <PageHeader eyebrow="SOP Schedule" title="SOP Calendar" subtitle="Track task deadlines connected to SOP work in one operational calendar." />
+      <TaskDeadlineCalendar tasks={data.tasks} month={calendarMonth} setMonth={setCalendarMonth} onOpen={setSelectedTask} />
+      {selectedTask ? (
+        <Panel title="Selected deadline" subtitle="Open My Tasks for comments and activity history." className="mb-4">
+          <p className="text-xs font-extrabold uppercase text-action">{selectedTask.taskId}</p>
+          <p className="mt-1 text-lg font-black text-white">{selectedTask.taskTitle}</p>
+        </Panel>
+      ) : null}
+      {loading ? <div className="mt-4 text-sm font-semibold text-white/60">Loading calendar...</div> : null}
+    </>
+  );
+}
+
 function TaskDeadlineCalendar({ tasks, month, setMonth, onOpen }) {
   const calendar = useMemo(() => buildTaskDeadlineCalendar(tasks, { month }), [tasks, month]);
   const deadlineCount = calendar.weeks.flat().reduce((total, day) => total + day.tasks.length, 0);
 
   return (
-    <Panel title="SOP Deadline Calendar" subtitle={`${deadlineCount} task deadlines in ${calendar.label}`} className="mb-4">
+    <Panel title="SOP Calendar" subtitle={`${deadlineCount} task deadlines in ${calendar.label}`} className="mb-4">
       <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.14em] text-action">
           <SolarIcon icon="solar:calendar-mark-linear" size={17} />
